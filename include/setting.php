@@ -71,7 +71,7 @@ class HPPC_Setting
     {
         $sanitary_values = array();
         if (isset($input['hearppc_calltracking_script'])) {
-            $sanitary_values['hearppc_calltracking_script'] = $input['hearppc_calltracking_script'];
+            $sanitary_values['hearppc_calltracking_script'] = sanitize_text_field($input['hearppc_calltracking_script']);
         }
 
         return $sanitary_values;
@@ -92,6 +92,6 @@ class HPPC_Setting
 
 /*
  * Retrieve this value with:
- * $hearppc_options = get_option( 'hearppc_option' ); // Array of All Options
+ * $hearppc_options = get_option('hearppc_option'); // Array of All Options
  * $server_url = $hearppc_options['server_url']; // Server URL
  */

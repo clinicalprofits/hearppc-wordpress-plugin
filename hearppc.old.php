@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Plugin Name: HearPPC Integration
- * Description: Installs the HearPPC landing page and call tracking
- * Version: 1.0.0
- * Author: JonPerry/PhungTran.
- */
 define('HPPC_DIR', plugin_dir_path(__FILE__));
 define('HPPC_URL', plugin_dir_url(__FILE__));
 define('HPPC_BASE', plugin_basename(__FILE__));
