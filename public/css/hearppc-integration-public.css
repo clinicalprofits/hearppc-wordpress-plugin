@@ -2,3 +2,6 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ #hearppc_practice_description {
+    font-style: italic;
+ }

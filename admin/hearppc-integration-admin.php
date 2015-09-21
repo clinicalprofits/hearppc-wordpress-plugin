@@ -85,19 +85,21 @@ class HearPPC_Integration_Admin
             'HearPPC Integration', // menu_title
             'manage_options', // capability
             'hearppc-settings', // menu_slug
-            function () {
-                if (!current_user_can('manage_options')) {
-                    wp_die('You do not have sufficient permissions to access this page.');
-                }
-                //$hearppc_practice_description = get_option('hearppc_practice_description');
-                include plugin_dir_path(__FILE__).'partials/hearppc-integration-admin-display.php';
-            } // function
+            array($this, 'add_options_page') // function
         );
+    }
+
+    public function add_options_page()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        }
+        include plugin_dir_path(__FILE__).'partials/hearppc-integration-admin-display.php';
     }
 
     /**
      * Add "Settings" to plugin listing
-     * 
+     *
      * @since 1.1.0
      */
     public function add_action_links($links, $file)
@@ -128,9 +130,7 @@ class HearPPC_Integration_Admin
         add_settings_section(
             'hearppc_settings_section',
             'Settings',
-            function () {
-                echo '<p>In order for the landing page to function properly, we need you to provide your <strong>access key</strong> and <strong>practice description</strong>.</p>';
-            },
+            array($this, 'settings_text'),
             'hearppc-admin'
         );
 
@@ -138,9 +138,7 @@ class HearPPC_Integration_Admin
         add_settings_section(
             'hearppc_call_tracking_section',
             'Call Tracking',
-            function () {
-                echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
-            },
+            array($this, 'call_tracking_text'),
             'hearppc-admin'
         );
 
@@ -148,9 +146,7 @@ class HearPPC_Integration_Admin
         add_settings_field(
             'hearppc_access_key',
             'Access Key',
-            function () {
-                include plugin_dir_path(__FILE__).'partials/hearppc-access-key-field.php';
-            },
+            array($this, 'access_key_field'),
             'hearppc-admin',
             'hearppc_settings_section'
         );
@@ -159,9 +155,7 @@ class HearPPC_Integration_Admin
         add_settings_field(
             'hearppc_practice_description',
             'Practice Description',
-            function () {
-                include plugin_dir_path(__FILE__).'partials/practice-description-field.php';
-            },
+            array($this, 'practice_description_field'),
             'hearppc-admin',
             'hearppc_settings_section'
         );
@@ -171,9 +165,7 @@ class HearPPC_Integration_Admin
         add_settings_field(
             'hearppc_call_tracking_id',
             'Call Tracking Id',
-            function () {
-                include plugin_dir_path(__FILE__).'partials/call-tracking-id-field.php';
-            },
+            array($this, 'call_tracking_id_field'),
             'hearppc-admin',
             'hearppc_call_tracking_section'
         );
@@ -182,11 +174,39 @@ class HearPPC_Integration_Admin
         add_settings_field(
             'hearppc_call_tracking_key',
             'Call Tracking Key',
-            function () {
-                include plugin_dir_path(__FILE__).'partials/call-tracking-key-field.php';
-            },
+            array($this, 'call_tracking_key_field'),
             'hearppc-admin',
             'hearppc_call_tracking_section'
         );
+    }
+
+    public function settings_text()
+    {
+        echo '<p>In order for the landing page to function properly, we need you to provide your <strong>access key</strong> and <strong>practice description</strong>.</p>';
+    }
+
+    public function call_tracking_text()
+    {
+        echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
+    }
+
+    public function access_key_field()
+    {
+        include plugin_dir_path(__FILE__).'partials/hearppc-access-key-field.php';
+    }
+
+    public function practice_description_field()
+    {
+        include plugin_dir_path(__FILE__).'partials/practice-description-field.php';
+    }
+
+    public function call_tracking_id_field()
+    {
+        include plugin_dir_path(__FILE__).'partials/call-tracking-id-field.php';
+    }
+
+    public function call_tracking_key_field()
+    {
+        include plugin_dir_path(__FILE__).'partials/call-tracking-key-field.php';
     }
 }

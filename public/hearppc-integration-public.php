@@ -86,7 +86,7 @@ class HearPPC_Integration_Public
         }
 
         // If set, enqueue the call_tracking scripts
-        if ($call_tracking_id = get_option('hearppc_call_tracking_id') && $call_tracking_key = get_option('hearppc_call_tracking_key')) {
+        if (($call_tracking_id = get_option('hearppc_call_tracking_id')) && ($call_tracking_key = get_option('hearppc_call_tracking_key'))) {
             wp_enqueue_script('callrail-swap-script', '//calltrk-production.s3.amazonaws.com/custom-swap/trump.ppc.js', false, $this->version, true);
             wp_enqueue_script('callrail-script', '//cdn.callrail.com/companies/'.$call_tracking_id.'/'.$call_tracking_key.'/swap.js', false, $this->version, true);
         }
@@ -107,7 +107,7 @@ class HearPPC_Integration_Public
     public function add_landing_page_shortcode()
     {
         if (is_page(get_option('hearppc_landing_page_id')) && $practice_description = get_option('hearppc_practice_description')) {
-            echo '<div id="hearppc_content"><p id="hearppc_practice_description">'.$practice_description.'</p></div>';
+            return '<div id="hearppc_content"><p id="hearppc_practice_description">'.$practice_description.'</p></div>';
         }
     }
 }
