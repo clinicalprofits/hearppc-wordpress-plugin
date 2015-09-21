@@ -1,0 +1,1 @@
+<input class="normal-text" type="text" name="hearppc_access_key" id="hearppc_access_key" value="<?php echo esc_attr(get_option('hearppc_access_key')); ?>" />

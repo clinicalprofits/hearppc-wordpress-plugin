@@ -24,27 +24,7 @@ class HearPPC_Integration_Deactivator {
 	 * Removes previously create landing page and stored options.
 	 */
 	public static function deactivate() {
-        self::delete_page();
-        self::delete_option('hearppc_landing_page_id');
-        self::delete_option('hearppc_options');
+        wp_delete_post(get_option('hearppc_landing_page_id'), true);
+        delete_option('hearppc_landing_page_id');
 	}
-
-    /**
-     * Removes provided option from WordPress database if present.
-     */
-    public static function delete_option($option)
-    {
-        if (get_option('hearppc_options')) {
-            delete_option('hearppc_options');
-        }
-    }
-
-    /**
-     * Removes previously created landing page if present.
-     */
-    public static function delete_page()
-    {
-        $lpid = intval(get_option('hearppc_landing_page_id'));
-        wp_delete_post($lpid, true);
-    }
 }

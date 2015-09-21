@@ -86,6 +86,10 @@ class HearPPC_Integration_Admin
             'manage_options', // capability
             'hearppc-settings', // menu_slug
             function () {
+                if (!current_user_can('manage_options')) {
+                    wp_die('You do not have sufficient permissions to access this page.');
+                }
+                //$hearppc_practice_description = get_option('hearppc_practice_description');
                 include plugin_dir_path(__FILE__).'partials/hearppc-integration-admin-display.php';
             } // function
         );
@@ -118,6 +122,7 @@ class HearPPC_Integration_Admin
 
         // register practice description option
         register_setting('hearppc_options_group', 'hearppc_practice_description', 'sanitize_text_field');
+        register_setting('hearppc_options_group', 'hearppc_access_key', 'sanitize_text_field');
 
         // set up settings section
         add_settings_section(
@@ -125,6 +130,16 @@ class HearPPC_Integration_Admin
             'Settings',
             function () {
                 echo '<p>In order for the landing page to function properly, we need you to provide your <strong>access key</strong> and <strong>practice description</strong>.</p>';
+            },
+            'hearppc-admin'
+        );
+
+        // set up call tracking section
+        add_settings_section(
+            'hearppc_call_tracking_section',
+            'Call Tracking',
+            function () {
+                echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
             },
             'hearppc-admin'
         );
@@ -151,15 +166,6 @@ class HearPPC_Integration_Admin
             'hearppc_settings_section'
         );
 
-        // set up settings section
-        add_settings_section(
-            'hearppc_call_tracking_section',
-            'Call Tracking',
-            function () {
-                echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
-            },
-            'hearppc-admin'
-        );
 
         // set up call tracking id field
         add_settings_field(

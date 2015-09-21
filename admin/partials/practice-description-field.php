@@ -1,0 +1,1 @@
+<textarea class="widefat" name="hearppc_practice_description" id="hearppc_practice_description" rows="8"><?php echo esc_textarea(get_option('hearppc_practice_description')); ?></textarea>
