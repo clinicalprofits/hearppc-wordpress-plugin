@@ -22,11 +22,15 @@ class HearPPC_Integration_Activator
     public static function activate()
     {
         // register options
-        add_option('');
+        add_option('hearppc_landing_page_id');
+        add_option('hearppc_call_tracking_id');
+        add_option('hearppc_call_tracking_key');
+        add_option('hearppc_access_key');
+        add_option('hearppc_practice_description');
 
         // create the landing page
         $post = array(
-            'post_content' => self::content(),
+            'post_content' => '[hearppc_landing_page]',
             'post_title' => 'Hearing Aids PPC',
             'post_name' => 'hearingaids-ppc',
             'post_status' => 'publish',
@@ -36,24 +40,5 @@ class HearPPC_Integration_Activator
         // store landing page id
         $lpid = wp_insert_post($post, false);
         update_option('hearppc_landing_page_id', $lpid);
-    }
-
-    /**
-     * The content to load into the landing page
-     */
-    public static function content()
-    {
-        $content =  '<div id="hearppc_content">';
-        $content .=     '<p id="hearppc_practice_description">This is the default content.</p>';
-        $content .= '</div>';
-
-        return $content;
-    }
-
-    public static function add_options()
-    {
-        add_option('hearppc_landing_page_id');
-        add_option('hearppc_calltracking_script');
-        add_option('hearppc_practice_description');
     }
 }

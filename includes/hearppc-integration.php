@@ -151,7 +151,8 @@ class HearPPC_Integration
         $this->loader->add_action('admin_init', $plugin_admin, 'admin_page_init');
 
         // add HearPPC Integration links to admin
-        $this->loader->add_filter('plugin_action_links_'.plugin_basename(__FILE__), $plugin_admin, 'add_action_links');
+        $this->loader->add_filter('plugin_action_links', $plugin_admin, 'add_action_links', 10, 2);
+
     }
 
     /**
@@ -167,6 +168,9 @@ class HearPPC_Integration
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
         $this->loader->add_action('wp_head', $plugin_public, 'add_noindex_nofollow_meta_tag');
+
+        // add shortcode
+        $this->loader->add_shortcode('hearppc_landing_page', $plugin_public, 'add_landing_page_shortcode');
     }
 
     /**

@@ -59,9 +59,9 @@ class HPPC_Setting
         );
 
         add_settings_field(
-            'hearppc_calltracking_script', // id
+            'hearppc_call_tracking_script', // id
             'Calltracking Script', // title
-            array($this, 'hearppc_calltracking_script_callback'), // callback
+            array($this, 'hearppc_call_tracking_script_callback'), // callback
             'hearppc-admin', // page
             'hppc_setting_section' // section
         );
@@ -70,8 +70,8 @@ class HPPC_Setting
     public function hppc_sanitize($input)
     {
         $sanitary_values = array();
-        if (isset($input['hearppc_calltracking_script'])) {
-            $sanitary_values['hearppc_calltracking_script'] = sanitize_text_field($input['hearppc_calltracking_script']);
+        if (isset($input['hearppc_call_tracking_script'])) {
+            $sanitary_values['hearppc_call_tracking_script'] = sanitize_text_field($input['hearppc_call_tracking_script']);
         }
 
         return $sanitary_values;
@@ -81,11 +81,11 @@ class HPPC_Setting
     {
     }
 
-    public function hearppc_calltracking_script_callback()
+    public function hearppc_call_tracking_script_callback()
     {
         printf(
-            '<input class="regular-text" type="text" name="hearppc_option[hearppc_calltracking_script]" id="hearppc_calltracking_script" value="%s">',
-            isset($this->hearppc_options['hearppc_calltracking_script']) ? esc_attr($this->hearppc_options['hearppc_calltracking_script']) : ''
+            '<input class="regular-text" type="text" name="hearppc_option[hearppc_call_tracking_script]" id="hearppc_call_tracking_script" value="%s">',
+            isset($this->hearppc_options['hearppc_call_tracking_script']) ? esc_attr($this->hearppc_options['hearppc_call_tracking_script']) : ''
         );
     }
 }

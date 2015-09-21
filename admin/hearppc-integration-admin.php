@@ -3,7 +3,6 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
  * @since      1.0.0
  */
 
@@ -12,8 +11,6 @@
  *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @author     Your Name <email@example.com>
  */
 class HearPPC_Integration_Admin
 {
@@ -54,7 +51,6 @@ class HearPPC_Integration_Admin
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        $this->landing_page_id = intval(get_option('hearppc_landing_page'));
     }
 
     /**
@@ -64,7 +60,7 @@ class HearPPC_Integration_Admin
      */
     public function enqueue_styles()
     {
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__).'css/plugin-name-admin.css', array(), $this->version, 'all');
+        // wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__).'css/plugin-name-admin.css', array(), $this->version, 'all');
     }
 
     /**
@@ -74,11 +70,13 @@ class HearPPC_Integration_Admin
      */
     public function enqueue_scripts()
     {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/plugin-name-admin.js', array('jquery'), $this->version, false);
+        // wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/plugin-name-admin.js', array('jquery'), $this->version, false);
     }
 
     /**
      * Creates the admin page to configure plugin.
+     *
+     * @since    1.0.0
      */
     public function add_admin_page()
     {
@@ -86,62 +84,103 @@ class HearPPC_Integration_Admin
             'HearPPC Settings', // page_title
             'HearPPC Integration', // menu_title
             'manage_options', // capability
-            'hearppc-options', // menu_slug
-            array($this, 'create_admin_page') // function
+            'hearppc-settings', // menu_slug
+            function () {
+                include plugin_dir_path(__FILE__).'partials/hearppc-integration-admin-display.php';
+            } // function
         );
     }
 
-    public function create_admin_page()
+    /**
+     * Add "Settings" to plugin listing
+     * 
+     * @since 1.1.0
+     */
+    public function add_action_links($links, $file)
     {
-        $this->hearppc_options = get_option('hearppc_options');
-        include(plugin_dir_path(__FILE__).'partials/hearppc-integration-admin-display.php' );
+        if (strpos($file, $this->plugin_name) !== false) {
+            array_unshift($links, '<a href="options-general.php?page=hearppc-settings">Settings</a>');
+        }
+
+        return $links;
     }
 
+    /**
+     * Sets up the admin page.
+     *
+     * @since 1.0.0
+     */
     public function admin_page_init()
     {
-        // register options
-        register_setting(
-            'hearppc_options_group', // option_group
-            'hearppc_options', // option_name
-            array($this, 'sanitize_input') // sanitize_callback
+        // register call tracking options
+        register_setting('hearppc_options_group', 'hearppc_call_tracking_id', 'sanitize_text_field');
+        register_setting('hearppc_options_group', 'hearppc_call_tracking_key', 'sanitize_text_field');
+
+        // register practice description option
+        register_setting('hearppc_options_group', 'hearppc_practice_description', 'sanitize_text_field');
+
+        // set up settings section
+        add_settings_section(
+            'hearppc_settings_section',
+            'Settings',
+            function () {
+                echo '<p>In order for the landing page to function properly, we need you to provide your <strong>access key</strong> and <strong>practice description</strong>.</p>';
+            },
+            'hearppc-admin'
+        );
+
+        // set up HearPPC key field
+        add_settings_field(
+            'hearppc_access_key',
+            'Access Key',
+            function () {
+                include plugin_dir_path(__FILE__).'partials/hearppc-access-key-field.php';
+            },
+            'hearppc-admin',
+            'hearppc_settings_section'
+        );
+
+        // set up practice description field
+        add_settings_field(
+            'hearppc_practice_description',
+            'Practice Description',
+            function () {
+                include plugin_dir_path(__FILE__).'partials/practice-description-field.php';
+            },
+            'hearppc-admin',
+            'hearppc_settings_section'
         );
 
         // set up settings section
         add_settings_section(
-            'hearppc_settings_section', // id
-            'Settings', // title
-            array($this, 'settings_section_info'), // callback
-            'hearppc-admin' // page
+            'hearppc_call_tracking_section',
+            'Call Tracking',
+            function () {
+                echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
+            },
+            'hearppc-admin'
         );
 
-        // set up call tracking script field
+        // set up call tracking id field
         add_settings_field(
-            'hearppc_calltracking_script', // id
-            'Calltracking Script', // title
-            array($this, 'hearppc_calltracking_script_callback'), // callback
-            'hearppc-admin', // page
-            'hearppc_settings_section' // section
+            'hearppc_call_tracking_id',
+            'Call Tracking Id',
+            function () {
+                include plugin_dir_path(__FILE__).'partials/call-tracking-id-field.php';
+            },
+            'hearppc-admin',
+            'hearppc_call_tracking_section'
         );
-    }
 
-    public function sanitize_input($input)
-    {
-        $sanitary_values = array();
-
-        if (isset($input['hearppc_calltracking_script'])) {
-            $sanitary_values['hearppc_calltracking_script'] = sanitize_text_field($input['hearppc_calltracking_script']);
-        }
-
-        return $sanitary_values;
-    }
-
-    public function settings_section_info()
-    {
-        echo 'To get the landing page to function properly, we need to do a little configuration.';
-    }
-
-    public function hearppc_calltracking_script_callback($input)
-    {
-        include(plugin_dir_path(__FILE__).'partials/calltracking-script-field.php' );
+        // set up call tracking key field
+        add_settings_field(
+            'hearppc_call_tracking_key',
+            'Call Tracking Key',
+            function () {
+                include plugin_dir_path(__FILE__).'partials/call-tracking-key-field.php';
+            },
+            'hearppc-admin',
+            'hearppc_call_tracking_section'
+        );
     }
 }

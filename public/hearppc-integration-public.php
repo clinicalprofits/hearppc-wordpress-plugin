@@ -61,8 +61,6 @@ class HearPPC_Integration_Public
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        $this->options = get_option('hearppc_options');
-        $this->landing_page_id = intval(get_option('hearppc_landing_page'));
     }
 
     /**
@@ -83,17 +81,17 @@ class HearPPC_Integration_Public
     public function enqueue_scripts()
     {
         // Enqueue HearPPC Landing Page script to landing page ONLY
-        if (is_page($this->landing_page_id)) {
-            wp_enqueue_script('hearppc-script', 'https://server.hearppc.com/js/hppc_script.js', false, $this->version, true);
+        if (is_page(get_option('hearppc_landing_page_id')) && $key = get_option('hearppc_access_key')) {
+            wp_enqueue_script('hearppc-script', 'https://server.hearppc.com/js/hppc_script.js?key='.$key, false, $this->version, true);
         }
 
-        // If set, enqueue the calltracking scripts
-        if (!empty($this->options['calltracking_script'])) {
+        // If set, enqueue the call_tracking scripts
+        if ($call_tracking_id = get_option('hearppc_call_tracking_id') && $call_tracking_key = get_option('hearppc_call_tracking_key')) {
             wp_enqueue_script('callrail-swap-script', '//calltrk-production.s3.amazonaws.com/custom-swap/trump.ppc.js', false, $this->version, true);
-            wp_enqueue_script('callrail-script', $this->options['calltracking_script'], false, $this->version, true);
+            wp_enqueue_script('callrail-script', '//cdn.callrail.com/companies/'.$call_tracking_id.'/'.$call_tracking_key.'/swap.js', false, $this->version, true);
         }
 
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/hearppc-integration-public.js', array('jquery'), $this->version, false);
+        // wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/hearppc-integration-public.js', array('jquery'), $this->version, false);
     }
 
     /**
@@ -101,8 +99,15 @@ class HearPPC_Integration_Public
      */
     public function add_noindex_nofollow_meta_tag()
     {
-        if (is_page($this->landing_page_id)) {
+        if (is_page(get_option('hearppc_landing_page_id'))) {
             echo '<meta name="robots" content="noindex, nofollow">';
+        }
+    }
+
+    public function add_landing_page_shortcode()
+    {
+        if (is_page(get_option('hearppc_landing_page_id')) && $practice_description = get_option('hearppc_practice_description')) {
+            echo '<div id="hearppc_content"><p id="hearppc_practice_description">'.$practice_description.'</p></div>';
         }
     }
 }
