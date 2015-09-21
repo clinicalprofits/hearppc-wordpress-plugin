@@ -1,1 +1,0 @@
-<input class="large-text" type="text" name="hearppc_calltracking_script" id="hearppc_calltracking_script" value="<?php esc_attr(get_option('hearppc_calltracking_script')); ?>" />
