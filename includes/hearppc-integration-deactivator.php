@@ -3,20 +3,18 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    HearPPC_Integration
+ * @subpackage HearPPC_Integration/includes
  */
 
 /**
  * Fired during plugin deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    HearPPC_Integration
+ * @subpackage HearPPC_Integration/includes
  */
 class HearPPC_Integration_Deactivator {
 

@@ -5,7 +5,7 @@
  * Plugin Name:     HearPPC Integration
  * Plugin URI:      https://github.com/Hipp04/hearppc-integration/
  * Description:     Sets up the HearPPC landing page, call tracking, and script dependencies.
- * Version:         1.0.0
+ * Version:         1.1.1
  * Author:          Clinical Profits, LLC
  * Author URI:      http://www.clinicalprofits.com/
  * License:         GPL-2.0+

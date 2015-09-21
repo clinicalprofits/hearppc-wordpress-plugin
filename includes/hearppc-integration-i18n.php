@@ -6,7 +6,6 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
  * @since      1.0.0
  */
 /**
@@ -16,8 +15,6 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- *
- * @author     Your Name <email@example.com>
  */
 class HearPPC_Integration_i18n
 {

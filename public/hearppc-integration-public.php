@@ -3,8 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://example.com
- * @since      1.0.0
+ * @since      1.1.1
  */
 
 /**
@@ -12,8 +11,6 @@
  *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @author     Your Name <email@example.com>
  */
 class HearPPC_Integration_Public
 {
