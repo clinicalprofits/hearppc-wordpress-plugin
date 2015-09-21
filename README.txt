@@ -1,5 +1,4 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
 Tags: hearppc
 Requires at least: 3.0.1
 Tested up to: 3.4
@@ -22,25 +21,42 @@ The plugin does the following actions:
 
 == Installation ==
 
+Via WordPress Admin:
+1. Go to Plugins -> Add New -> Upload Plugin and browse for the plugin .zip file
+2. Activate the plugin on the resulting page
+
+Manually:
 1. Upload `hearppc-integration` directory to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Configuration ==
 
-In order for the plugin to function properly a few settings need to be configured from WordPress Admin -> Settings -> HearPPC
+In order for the plugin to function properly it needs to be configured.
 
-1. Fill 
+1. Go to WordPress Admin -> Settings -> HearPPC Integration
+2. For basic functionality, fill in Access Key and Practice Description with the provided information
+3. For call tracking, fill in the Call Tracking Id and Call Tracking Key with the provided information
+4. Save your changes
+
+== Testing ==
+
+To test the landing page:
+
+1. Go to Pages and view "Hearing Aids PPC"
+2. The landing page requires an Ad Group to be passed through the URL. Append ?ag=Test (or &ag=Test if '?' is already present) to the end of the URL and hit enter
+3. You should see "Congratulations" displayed, if you do not, please contact us at clinicalprofits@gmail.com
 
 == Frequently Asked Questions ==
 
-= Question 1 =
+= It doesn't work. What should I do? =
 
-An answer to that question.
+Please contact us at clinicalprofits@gmail.com
 
-== Screenshots ==
+= My call tracking isn't working. What gives? =
 
-== Changelog ==
+This is probably due to the call tracking id or key being incorrect. Please confirm that you copied the correct values into the form.
+If it still isn't working please contact us at clinicalprofits@gmail.com
 
+= What does "Invalid account. Aborting." mean? =
 
-== Arbitrary section ==
-
+This means that the domain in our database doesn't match the domain of your landing page. Please contact us at clinicalprofits@gmail.com to fix the issue.
