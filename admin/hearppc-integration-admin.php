@@ -98,7 +98,7 @@ class HearPPC_Integration_Admin
     }
 
     /**
-     * Add "Settings" to plugin listing
+     * Add links to plugin listing
      *
      * @since 1.1.0
      */
@@ -106,6 +106,7 @@ class HearPPC_Integration_Admin
     {
         if (strpos($file, $this->plugin_name) !== false) {
             array_unshift($links, '<a href="options-general.php?page=hearppc-settings">Settings</a>');
+            array_unshift($links, '<a target="_blank" href="'.get_site_url().'/hearingaids-ppc/?ag=test">View Test</a>');
         }
 
         return $links;
