@@ -105,8 +105,8 @@ class HearPPC_Integration_Admin
     public function add_action_links($links, $file)
     {
         if (strpos($file, $this->plugin_name) !== false) {
+            array_unshift($links, '<a target="_blank" href="'.get_site_url().'/hearingaids-ppc/?ag=test">Test</a>');
             array_unshift($links, '<a href="options-general.php?page=hearppc-settings">Settings</a>');
-            array_unshift($links, '<a target="_blank" href="'.get_site_url().'/hearingaids-ppc/?ag=test">View Test</a>');
         }
 
         return $links;

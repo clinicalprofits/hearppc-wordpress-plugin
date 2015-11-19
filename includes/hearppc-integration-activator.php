@@ -37,5 +37,8 @@ class HearPPC_Integration_Activator
         // store landing page id
         $lpid = wp_insert_post($post, false);
         update_option('hearppc_landing_page_id', $lpid);
+
+        wp_redirect(admin_url('options-general.php?page=hearppc-settings'));
+        exit;
     }
 }
