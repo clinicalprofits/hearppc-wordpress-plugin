@@ -105,7 +105,7 @@ class HearPPC_Integration_Admin
     public function add_action_links($links, $file)
     {
         if (strpos($file, $this->plugin_name) !== false) {
-            array_unshift($links, '<a target="_blank" href="'.get_site_url().'/hearingaids-ppc/?ag=test">Test</a>');
+            array_unshift($links, '<a target="_blank" href="'.get_site_url().'/hearing-aids-landing-ppc/?ag=test">Test</a>');
             array_unshift($links, '<a href="options-general.php?page=hearppc-settings">Settings</a>');
         }
 
@@ -125,7 +125,6 @@ class HearPPC_Integration_Admin
 
         // register practice description option
         register_setting('hearppc_options_group', 'hearppc_practice_description', 'sanitize_text_field');
-        register_setting('hearppc_options_group', 'hearppc_access_key', 'sanitize_text_field');
 
         // set up settings section
         add_settings_section(
@@ -141,15 +140,6 @@ class HearPPC_Integration_Admin
             'Call Tracking',
             array($this, 'call_tracking_text'),
             'hearppc-admin'
-        );
-
-        // set up HearPPC key field
-        add_settings_field(
-            'hearppc_access_key',
-            'Access Key',
-            array($this, 'access_key_field'),
-            'hearppc-admin',
-            'hearppc_settings_section'
         );
 
         // set up practice description field
@@ -183,17 +173,12 @@ class HearPPC_Integration_Admin
 
     public function settings_text()
     {
-        echo '<p>In order for the landing page to function properly, we need you to provide your <strong>access key</strong> and <strong>practice description</strong>.</p>';
+        echo '<p>Your <strong>practice description</strong> is displayed near the bottom of your landing page.</p>';
     }
 
     public function call_tracking_text()
     {
         echo 'To set up call tracking, we need you to provide your <strong>Call Tracking Id</strong> and <strong>Call Tracking Key</strong>.';
-    }
-
-    public function access_key_field()
-    {
-        include plugin_dir_path(__FILE__).'partials/hearppc-access-key-field.php';
     }
 
     public function practice_description_field()

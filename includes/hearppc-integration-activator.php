@@ -22,14 +22,13 @@ class HearPPC_Integration_Activator
         add_option('hearppc_landing_page_id');
         add_option('hearppc_call_tracking_id');
         add_option('hearppc_call_tracking_key');
-        add_option('hearppc_access_key');
         add_option('hearppc_practice_description');
 
         // create the landing page
         $post = array(
             'post_content' => '[hearppc_landing_page]',
-            'post_title' => 'Hearing Aids PPC',
-            'post_name' => 'hearingaids-ppc',
+            'post_title' => 'Hearing Aids Landing PPC',
+            'post_name' => 'hearing-aids-landing-ppc',
             'post_status' => 'publish',
             'post_type' => 'page',
         );
